@@ -35,8 +35,6 @@ const ALL_PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
 ];
 
-const SIMILAR_COUNT = 10;
-
 const createAd = () => ({
   author: {
     avatar: `img/avatars/user0${getRandomPositiveInteger(1, 8)}.png`,
@@ -60,7 +58,4 @@ const createAd = () => ({
   },
 });
 
-
-const similarAd = new Array(SIMILAR_COUNT).fill(null).map(() => createAd());
-
-export {similarAd};
+export {createAd};
