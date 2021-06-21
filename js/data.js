@@ -2,11 +2,26 @@
 import {getRandomPositiveFloat, getRandomPositiveInteger, getRandomArrayElement, createRandomArray} from './utils.js';
 
 const TYPES_OF_HOUSING = [
-  'palace',
-  'flat',
-  'house',
-  'bungalow',
-  'hotel',
+  {
+    id: 'bungalow',
+    display: 'Бунгало',
+  },
+  {
+    id: 'flat',
+    display: 'Квартира',
+  },
+  {
+    id: 'hotel',
+    display: 'Отель',
+  },
+  {
+    id: 'house',
+    display: 'Дом',
+  },
+  {
+    id: 'palace',
+    display: 'Дворец',
+  },
 ];
 
 const CHECKIN_TIMES = [
@@ -41,7 +56,7 @@ const createAd = () => ({
   },
   offer: {
     title: 'Заголовок объявления',
-    address: `Широта: ${getRandomPositiveFloat(35.65000,  35.70000, 5)}, Долгота: ${getRandomPositiveFloat(139.70000, 139.80000, 5)}`,
+    address: `Широта: ${getRandomPositiveFloat(35.65000, 35.70000, 5)}, Долгота: ${getRandomPositiveFloat(139.70000, 139.80000, 5)}`,
     price: getRandomPositiveInteger(10000, 1000000),
     type: getRandomArrayElement(TYPES_OF_HOUSING),
     rooms: getRandomPositiveInteger(1, 100),
@@ -53,9 +68,12 @@ const createAd = () => ({
     photos: createRandomArray(ALL_PHOTOS, 3),
   },
   location: {
-    lat: getRandomPositiveFloat(35.65000,  35.70000, 5),
+    lat: getRandomPositiveFloat(35.65000, 35.70000, 5),
     lng: getRandomPositiveFloat(139.70000, 139.80000, 5),
   },
 });
 
-export {createAd};
+const SIMILAR_COUNT = 10;
+const createAds = () => new Array(SIMILAR_COUNT).fill(null).map(() => createAd());
+
+export {createAds};
