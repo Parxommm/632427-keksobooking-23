@@ -1,6 +1,3 @@
-import {createAd} from './data.js';
-
-const SIMILAR_COUNT = 10;
-const similarAd = new Array(SIMILAR_COUNT).fill(null).map(() => createAd());
-
-console.log(similarAd);
+/* eslint-disable no-unused-vars */
+import {createAds} from './data.js';
+import './card.js';

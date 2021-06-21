@@ -58,4 +58,7 @@ const createAd = () => ({
   },
 });
 
-export {createAd};
+const SIMILAR_COUNT = 10;
+const createAds = () => new Array(SIMILAR_COUNT).fill(null).map(() => createAd());
+
+export {createAds};
