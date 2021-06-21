@@ -11,10 +11,17 @@ similarAds.forEach((adElement) => {
   cardElement.querySelector('.popup__title').textContent = adElement.offer.title;
   cardElement.querySelector('.popup__text--address').textContent = adElement.offer.address;
   cardElement.querySelector('.popup__text--price').textContent = `${adElement.offer.price} ₽/ночь`;
-  cardElement.querySelector('.popup__type').textContent = adElement.offer.type;
+  cardElement.querySelector('.popup__type').textContent = adElement.offer.type.display;
   cardElement.querySelector('.popup__text--capacity').textContent = `${adElement.offer.rooms} комнаты для ${adElement.offer.guests} гостей`;
   cardElement.querySelector('.popup__text--time').textContent = `Заезд после ${adElement.offer.checkin}, выезд до ${adElement.offer.checkout}`;
   cardElement.querySelector('.popup__description').textContent = adElement.offer.description;
+
+  //Проверка на наличие данных в блоке с описанием
+  if (adElement.offer.description === '') {
+    cardElement.querySelector('.popup__description').style.display = 'none';
+  } else {
+    cardElement.querySelector('.popup__description').textContent = adElement.offer.description;
+  }
 
   //Создает список удобств
   const modifiers = adElement.offer.features.map((feature) => `popup__feature--${feature}`);
