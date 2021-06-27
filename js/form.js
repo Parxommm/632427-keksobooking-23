@@ -40,39 +40,34 @@ function checkValidityPrice () {
 // Валидация количества комнат и количества мест
 function checkValidityRoomNumberCapacity () {
   const numberOfRooms = roomNumberSelect.value;
-
+  capacitySelectOptions.forEach((element) => {
+    element.disabled = true;
+  });
   if (numberOfRooms === '1') {
-    // Перебираем все options в списке количества мест
     capacitySelectOptions.forEach((element) => {
-      // всем options удаляем атрибут disable
-      element.disabled = false;
-      // отключаем опцию если она соответствует условию и меняем выбранное количество мест
-      if (element.value === '0' || element.value === '2' || element.value === '3') {
-        element.disabled = true;
+      if (element.value === '1') {
+        element.disabled = false;
         capacitySelect.value = '1';
       }
     });
   } else if (numberOfRooms === '2') {
     capacitySelectOptions.forEach((element) => {
-      element.disabled = false;
-      if (element.value === '0' || element.value === '3') {
-        element.disabled = true;
+      if (element.value === '1' || element.value === '2') {
+        element.disabled = false;
         capacitySelect.value = '1';
       }
     });
   } else if (numberOfRooms === '3') {
     capacitySelectOptions.forEach((element) => {
-      element.disabled = false;
-      if (element.value === '0') {
-        element.disabled = true;
+      if (element.value === '1' || element.value === '2' || element.value === '3') {
+        element.disabled = false;
         capacitySelect.value = '1';
       }
     });
   } else if (numberOfRooms === '100') {
     capacitySelectOptions.forEach((element) => {
-      element.disabled = false;
-      if (element.value === '1' || element.value === '2' || element.value === '3') {
-        element.disabled = true;
+      if (element.value === '0') {
+        element.disabled = false;
         capacitySelect.value = '0';
       }
     });
