@@ -1,8 +1,75 @@
+/* eslint-disable id-length */
 const titleInput = document.querySelector('#title');
 const priceInput = document.querySelector('#price');
 const roomNumberSelect = document.querySelector('#room_number');
 const capacitySelect = document.querySelector('#capacity');
 const capacitySelectOptions = document.querySelectorAll('#capacity option');
+const filtersForm = document.querySelector('.map__filters');
+const adForm = document.querySelector('.ad-form');
+const filtersFormElements = filtersForm.children;
+const adFormElements = adForm.children;
+const typeOfHousingSelect = document.querySelector('#type');
+const timeinSelect = document.querySelector('#timein');
+const timeoutSelect = document.querySelector('#timeout');
+const addressInput = document.querySelector('#address');
+
+// Неактивное состояние формы
+function inactivateForm () {
+  filtersForm.classList.add('map__filters--disabled');
+  adForm.classList.add('ad-form--disabled');
+  for (let i = 0; i < filtersFormElements.length; i++) {
+    filtersFormElements[i].disabled = true;
+  }
+  for (let i = 0; i < adFormElements.length; i++) {
+    adFormElements[i].disabled = true;
+  }
+}
+
+// Активное состояние формы
+function activateForm () {
+  filtersForm.classList.remove('map__filters--disabled');
+  adForm.classList.remove('ad-form--disabled');
+  for (let i = 0; i < filtersFormElements.length; i++) {
+    filtersFormElements[i].disabled = false;
+  }
+  for (let i = 0; i < adFormElements.length; i++) {
+    adFormElements[i].disabled = false;
+  }
+}
+
+// Синхронизация типа жилья с минимальной ценой
+function changeMinPrice () {
+  if (typeOfHousingSelect.value === 'bungalow') {
+    priceInput.min = 0;
+    priceInput.placeholder ='0';
+  } else if (typeOfHousingSelect.value === 'flat') {
+    priceInput.min = 1000;
+    priceInput.placeholder ='1000';
+  } else if (typeOfHousingSelect.value === 'hotel') {
+    priceInput.min = 3000;
+    priceInput.placeholder ='3000';
+  } else if (typeOfHousingSelect.value === 'house') {
+    priceInput.min = 5000;
+    priceInput.placeholder ='5000';
+  } else if (typeOfHousingSelect.value === 'palace') {
+    priceInput.min = 10000;
+    priceInput.placeholder ='10000';
+  }
+}
+
+typeOfHousingSelect.addEventListener('change', changeMinPrice);
+
+// Синхронизация времени заезда и выезда
+function changeTimeoutSelect () {
+  timeoutSelect.value = timeinSelect.value;
+}
+
+function changeTimeinSelect () {
+  timeinSelect.value = timeoutSelect.value;
+}
+
+timeinSelect.addEventListener('change', changeTimeoutSelect);
+timeoutSelect.addEventListener('change', changeTimeinSelect);
 
 // Валидация поля заголовка
 const MIN_TITLE_LENGTH = 30;
@@ -81,4 +148,8 @@ function checkValidity () {
   roomNumberSelect.addEventListener('change', checkValidityRoomNumberCapacity);
 }
 
-export {checkValidity};
+const setAddress = ({lat, lng}) => {
+  addressInput.value = `Широта: ${lat.toFixed(5)}, Долгота: ${lng.toFixed(5)}`;
+};
+
+export {checkValidity, inactivateForm, activateForm, setAddress};

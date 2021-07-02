@@ -29,12 +29,12 @@ function createCard (object) {
   });
 
   // Добавляет фото
-  const photoCardElement = document.createElement('img');
-  photoCardElement.classList.add('popup__photo');
-  photoCardElement.width = 45;
-  photoCardElement.height = 40;
-  photoCardElement.alt = 'Фотография жилья';
   object.offer.photos.forEach((photo) => {
+    const photoCardElement = document.createElement('img');
+    photoCardElement.classList.add('popup__photo');
+    photoCardElement.width = 45;
+    photoCardElement.height = 40;
+    photoCardElement.alt = 'Фотография жилья';
     photoCardElement.src = photo;
     cardElement.querySelector('.popup__photos').appendChild(photoCardElement);
   });
