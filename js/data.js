@@ -58,7 +58,7 @@ const createAd = () => ({
     title: 'Заголовок объявления',
     address: `Широта: ${getRandomPositiveFloat(35.65000, 35.70000, 5)}, Долгота: ${getRandomPositiveFloat(139.70000, 139.80000, 5)}`,
     price: getRandomPositiveInteger(10000, 1000000),
-    type: getRandomArrayElement(TYPES_OF_HOUSING),
+    type: getRandomArrayElement(TYPES_OF_HOUSING).display,
     rooms: getRandomPositiveInteger(1, 100),
     guests: getRandomPositiveInteger(1, 100),
     checkin: getRandomArrayElement(CHECKIN_TIMES),
