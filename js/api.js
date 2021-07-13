@@ -26,7 +26,7 @@ const sendData = () => {
     const formData = new FormData(evt.target);
 
     fetch(
-      'https://23.javascript.pages.academy/keksobooking111',
+      'https://23.javascript.pages.academy/keksobooking',
       {
         method: 'POST',
         body: formData,
