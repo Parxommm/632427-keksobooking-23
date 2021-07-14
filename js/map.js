@@ -74,4 +74,4 @@ function addAllOffers(createAds) {
   });
 }
 
-export {addAllOffers};
+export {addAllOffers, TokyoCenter};

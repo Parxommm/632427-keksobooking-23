@@ -1,4 +1,6 @@
 /* eslint-disable id-length */
+import {showAlert} from './utils.js';
+
 const titleInput = document.querySelector('#title');
 const priceInput = document.querySelector('#price');
 const roomNumberSelect = document.querySelector('#room_number');
@@ -12,6 +14,7 @@ const typeOfHousingSelect = document.querySelector('#type');
 const timeinSelect = document.querySelector('#timein');
 const timeoutSelect = document.querySelector('#timeout');
 const addressInput = document.querySelector('#address');
+const resetButton = document.querySelector('.ad-form__reset');
 
 // Неактивное состояние формы
 function inactivateForm () {
@@ -152,4 +155,17 @@ const setAddress = ({lat, lng}) => {
   addressInput.value = `Широта: ${lat.toFixed(5)}, Долгота: ${lng.toFixed(5)}`;
 };
 
-export {checkValidity, inactivateForm, activateForm, setAddress};
+// Очистка формы по кнопке "очистить"
+const resetForm = (evt) => {
+  evt.preventDefault();
+  adForm.reset();
+  setAddress({
+    lat:35.6938,
+    lng: 139.7034,
+  });
+  showAlert('Форма очищена.', 'green', '1500px');
+};
+
+resetButton.addEventListener('click', resetForm);
+
+export {checkValidity, inactivateForm, activateForm, setAddress, adForm};
