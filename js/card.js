@@ -7,7 +7,19 @@ function createCard (object) {
   cardElement.querySelector('.popup__title').textContent = object.offer.title;
   cardElement.querySelector('.popup__text--address').textContent = object.offer.address;
   cardElement.querySelector('.popup__text--price').textContent = `${object.offer.price} ₽/ночь`;
-  cardElement.querySelector('.popup__type').textContent = object.offer.type.display;
+
+  if (object.offer.type === 'bungalow') {
+    cardElement.querySelector('.popup__type').textContent = 'Бунгало';
+  } else if (object.offer.type === 'flat') {
+    cardElement.querySelector('.popup__type').textContent = 'Квартира';
+  } else if (object.offer.type === 'hotel') {
+    cardElement.querySelector('.popup__type').textContent = 'Отель';
+  } else if (object.offer.type === 'house') {
+    cardElement.querySelector('.popup__type').textContent = 'Дом';
+  } else if(object.offer.type === 'palace') {
+    cardElement.querySelector('.popup__type').textContent = 'Дворец';
+  }
+
   cardElement.querySelector('.popup__text--capacity').textContent = `${object.offer.rooms} комнаты для ${object.offer.guests} гостей`;
   cardElement.querySelector('.popup__text--time').textContent = `Заезд после ${object.offer.checkin}, выезд до ${object.offer.checkout}`;
   cardElement.querySelector('.popup__description').textContent = object.offer.description;

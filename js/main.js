@@ -11,13 +11,7 @@ function createCards(arr, container) {
   arr.forEach((item) => container.append(createCard(item)));
 }
 
-// createCards(createAds(), cardsList);
-
-// inactivateForm();
-
 checkValidity();
-
-// addAllOffers(createAds());
 
 getData();
 sendData();

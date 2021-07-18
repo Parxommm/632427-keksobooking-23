@@ -1,15 +1,15 @@
 import {activateForm, setAddress} from './form.js';
 import {createCard} from './card.js';
 
+const SIMILAR_MARKER_COUNT = 10;
+
 const TokyoCenter = {
   lat:35.6938,
   lng: 139.7034,
 };
 
 const map = L.map('map-canvas')
-  .on('load', () => {
-    activateForm(); //Почему не работает, не могу разобраться?
-  })
+  .on('load', () => activateForm)
   .setView(TokyoCenter, 10);
 
 L.tileLayer(
@@ -38,8 +38,6 @@ const mainPinMarker = L.marker(
 
 mainPinMarker.addTo(map);
 
-setAddress(TokyoCenter);
-
 mainPinMarker.on('moveend', (evt) => {
   setAddress(evt.target.getLatLng());
 });
@@ -49,6 +47,8 @@ const pinIcon = L.icon({
   iconSize: [40, 40],
   iconAnchor: [20, 40],
 });
+
+const markerGroup = L.layerGroup().addTo(map);
 
 function addOneOffer(createAd) {
   const pinMarker = L.marker(
@@ -62,16 +62,20 @@ function addOneOffer(createAd) {
   );
 
   pinMarker
-    .addTo(map)
+    .addTo(markerGroup)
     .bindPopup(
       createCard(createAd),
     );
 }
 
 function addAllOffers(createAds) {
-  createAds.forEach((element) => {
+  createAds.slice(0, SIMILAR_MARKER_COUNT).forEach((element) => {
     addOneOffer(element);
   });
 }
 
-export {addAllOffers, TokyoCenter};
+function clearMarkers () {
+  markerGroup.clearLayers();
+}
+
+export {addAllOffers, TokyoCenter, clearMarkers};
