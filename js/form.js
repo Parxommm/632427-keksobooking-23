@@ -1,6 +1,5 @@
 /* eslint-disable id-length */
-import {showAlert} from './utils.js';
-import {TokyoCenter} from './map.js';
+import {TokyoCenter, resetMap} from './map.js';
 
 const titleInput = document.querySelector('#title');
 const priceInput = document.querySelector('#price');
@@ -16,6 +15,7 @@ const timeinSelect = document.querySelector('#timein');
 const timeoutSelect = document.querySelector('#timeout');
 const addressInput = document.querySelector('#address');
 const resetButton = document.querySelector('.ad-form__reset');
+const adFormInputs = adForm.querySelectorAll('input');
 
 // Неактивное состояние формы
 function inactivateForm () {
@@ -145,6 +145,17 @@ function checkValidityRoomNumberCapacity () {
   }
 }
 
+
+// Функция выделения красной рамкой
+function checkValidityOnSubmit () {
+  for (let i = 0; i < adFormInputs.length; i++) {
+    const input = adFormInputs[i];
+    if (input.validity.valid === false) {
+      input.style.border = '3px solid red';
+    }
+  }
+}
+
 function checkValidity () {
   titleInput.addEventListener('input', checkValidityTitle);
   priceInput.addEventListener('input', checkValidityPrice);
@@ -161,12 +172,13 @@ setAddress(TokyoCenter);
 // Очистка формы по кнопке "очистить"
 const resetForm = (evt) => {
   evt.preventDefault();
+  filtersForm.reset();
   adForm.reset();
+  resetMap();
   setAddress(TokyoCenter);
-  showAlert('Форма очищена.', 'green', '1500px');
 };
 
 resetButton.addEventListener('click', resetForm);
 
 
-export {checkValidity, inactivateForm, activateForm, setAddress, adForm};
+export {checkValidity, inactivateForm, activateForm, setAddress, checkValidityOnSubmit, resetForm, adForm};

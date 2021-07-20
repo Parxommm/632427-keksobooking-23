@@ -1,5 +1,6 @@
-import {activateForm, setAddress} from './form.js';
+import {setAddress} from './form.js';
 import {createCard} from './card.js';
+import {getData} from './api.js';
 
 const SIMILAR_MARKER_COUNT = 10;
 
@@ -9,7 +10,7 @@ const TokyoCenter = {
 };
 
 const map = L.map('map-canvas')
-  .on('load', () => activateForm)
+  .on('load', () => getData())
   .setView(TokyoCenter, 10);
 
 L.tileLayer(
@@ -78,4 +79,9 @@ function clearMarkers () {
   markerGroup.clearLayers();
 }
 
-export {addAllOffers, TokyoCenter, clearMarkers};
+function resetMap () {
+  mainPinMarker.setLatLng(TokyoCenter);
+  map.setView(TokyoCenter, 10);
+}
+
+export {addAllOffers, TokyoCenter, clearMarkers, resetMap};
