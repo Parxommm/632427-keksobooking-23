@@ -15,10 +15,9 @@ const timeinSelect = document.querySelector('#timein');
 const timeoutSelect = document.querySelector('#timeout');
 const addressInput = document.querySelector('#address');
 const resetButton = document.querySelector('.ad-form__reset');
-const adFormInputs = adForm.querySelectorAll('input');
 
 // Неактивное состояние формы
-function inactivateForm () {
+const inactivateForm = () => {
   filtersForm.classList.add('map__filters--disabled');
   adForm.classList.add('ad-form--disabled');
   for (let i = 0; i < filtersFormElements.length; i++) {
@@ -27,10 +26,10 @@ function inactivateForm () {
   for (let i = 0; i < adFormElements.length; i++) {
     adFormElements[i].disabled = true;
   }
-}
+};
 
 // Активное состояние формы
-function activateForm () {
+const activateForm = () => {
   filtersForm.classList.remove('map__filters--disabled');
   adForm.classList.remove('ad-form--disabled');
   for (let i = 0; i < filtersFormElements.length; i++) {
@@ -39,10 +38,10 @@ function activateForm () {
   for (let i = 0; i < adFormElements.length; i++) {
     adFormElements[i].disabled = false;
   }
-}
+};
 
 // Синхронизация типа жилья с минимальной ценой
-function changeMinPrice () {
+const changeMinPrice = () => {
   if (typeOfHousingSelect.value === 'bungalow') {
     priceInput.min = 0;
     priceInput.placeholder ='0';
@@ -59,18 +58,18 @@ function changeMinPrice () {
     priceInput.min = 10000;
     priceInput.placeholder ='10000';
   }
-}
+};
 
 typeOfHousingSelect.addEventListener('change', changeMinPrice);
 
 // Синхронизация времени заезда и выезда
-function changeTimeoutSelect () {
+const changeTimeoutSelect = () => {
   timeoutSelect.value = timeinSelect.value;
-}
+};
 
-function changeTimeinSelect () {
+const changeTimeinSelect = () => {
   timeinSelect.value = timeoutSelect.value;
-}
+};
 
 timeinSelect.addEventListener('change', changeTimeoutSelect);
 timeoutSelect.addEventListener('change', changeTimeinSelect);
@@ -79,7 +78,7 @@ timeoutSelect.addEventListener('change', changeTimeinSelect);
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 
-function checkValidityTitle () {
+const checkValidityTitle = () => {
   const valueLength = titleInput.value.length;
 
   if (valueLength < MIN_TITLE_LENGTH) {
@@ -91,10 +90,10 @@ function checkValidityTitle () {
   }
 
   titleInput.reportValidity();
-}
+};
 
 // Валидация поля цены за ночь
-function checkValidityPrice () {
+const checkValidityPrice = () => {
   const valuePrice = priceInput.value;
 
   if (valuePrice < +priceInput.min) {
@@ -106,10 +105,10 @@ function checkValidityPrice () {
   }
 
   priceInput.reportValidity();
-}
+};
 
 // Валидация количества комнат и количества мест
-function checkValidityRoomNumberCapacity () {
+const checkValidityRoomNumberCapacity = () => {
   const numberOfRooms = roomNumberSelect.value;
   capacitySelectOptions.forEach((element) => {
     element.disabled = true;
@@ -143,37 +142,26 @@ function checkValidityRoomNumberCapacity () {
       }
     });
   }
-}
+};
 
-
-// Функция выделения красной рамкой
-function checkValidityOnSubmit () {
-  for (let i = 0; i < adFormInputs.length; i++) {
-    const input = adFormInputs[i];
-    if (input.validity.valid === false) {
-      input.style.border = '3px solid red';
-    }
-  }
-}
-
-function checkValidity () {
+const checkValidity = () => {
   titleInput.addEventListener('input', checkValidityTitle);
   priceInput.addEventListener('input', checkValidityPrice);
   document.addEventListener('DOMContentLoaded', checkValidityRoomNumberCapacity); //вызывается для того что бы функция сработала сразу после загрузки страницы
   roomNumberSelect.addEventListener('change', checkValidityRoomNumberCapacity);
-}
+};
 
 const setAddress = ({lat, lng}) => {
-  addressInput.value = `Широта: ${lat.toFixed(5)}, Долгота: ${lng.toFixed(5)}`;
+  addressInput.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
 };
 
 setAddress(TokyoCenter);
 
 // Очистка формы по кнопке "очистить"
-const resetForm = (evt) => {
-  evt.preventDefault();
+const resetForm = () => {
   filtersForm.reset();
   adForm.reset();
+  changeMinPrice();
   resetMap();
   setAddress(TokyoCenter);
 };
@@ -181,4 +169,4 @@ const resetForm = (evt) => {
 resetButton.addEventListener('click', resetForm);
 
 
-export {checkValidity, inactivateForm, activateForm, setAddress, checkValidityOnSubmit, resetForm, adForm};
+export {checkValidity, inactivateForm, activateForm, setAddress, resetForm, adForm};

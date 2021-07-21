@@ -43,8 +43,8 @@ const sendData = () => {
       },
     ).then((response) => {
       if (response.ok) {
-        showSuccessCard();
         resetForm();
+        showSuccessCard();
       } else {
         showErrorCard();
       }

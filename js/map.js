@@ -5,13 +5,13 @@ import {getData} from './api.js';
 const SIMILAR_MARKER_COUNT = 10;
 
 const TokyoCenter = {
-  lat:35.6938,
-  lng: 139.7034,
+  lat:35.68168,
+  lng: 139.75387,
 };
 
 const map = L.map('map-canvas')
-  .on('load', () => getData())
-  .setView(TokyoCenter, 10);
+  .on('load', getData)
+  .setView(TokyoCenter, 13);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -27,10 +27,7 @@ const mainPinIcon = L.icon({
 });
 
 const mainPinMarker = L.marker(
-  {
-    lat: 35.6895,
-    lng: 139.692,
-  },
+  TokyoCenter,
   {
     draggable: true,
     icon: mainPinIcon,
@@ -51,7 +48,7 @@ const pinIcon = L.icon({
 
 const markerGroup = L.layerGroup().addTo(map);
 
-function addOneOffer(createAd) {
+const addOneOffer = (createAd) => {
   const pinMarker = L.marker(
     {
       lat: createAd.location.lat,
@@ -67,21 +64,23 @@ function addOneOffer(createAd) {
     .bindPopup(
       createCard(createAd),
     );
-}
+};
 
-function addAllOffers(createAds) {
+const addAllOffers = (createAds) => {
   createAds.slice(0, SIMILAR_MARKER_COUNT).forEach((element) => {
     addOneOffer(element);
   });
-}
+};
 
-function clearMarkers () {
+const clearMarkers = () => {
   markerGroup.clearLayers();
-}
+};
 
-function resetMap () {
+const resetMap = () => {
+  clearMarkers();
   mainPinMarker.setLatLng(TokyoCenter);
-  map.setView(TokyoCenter, 10);
-}
+  map.setView(TokyoCenter, 13);
+  getData();
+};
 
 export {addAllOffers, TokyoCenter, clearMarkers, resetMap};

@@ -1,7 +1,6 @@
-const cardsList = document.querySelector('.map__canvas');
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
 
-function createCard (object) {
+const createCard = (object) => {
   const cardElement = cardTemplate.cloneNode(true);
   cardElement.querySelector('.popup__avatar').src = object.author.avatar;
   cardElement.querySelector('.popup__title').textContent = object.offer.title;
@@ -58,6 +57,6 @@ function createCard (object) {
   }
 
   return cardElement;
-}
+};
 
-export {createCard, cardsList};
+export {createCard};
