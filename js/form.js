@@ -1,5 +1,6 @@
 /* eslint-disable id-length */
 import {TokyoCenter, resetMap} from './map.js';
+import {typesOfHousingKeys} from './utils.js';
 
 const titleInput = document.querySelector('#title');
 const priceInput = document.querySelector('#price');
@@ -15,6 +16,11 @@ const timeinSelect = document.querySelector('#timein');
 const timeoutSelect = document.querySelector('#timeout');
 const addressInput = document.querySelector('#address');
 const resetButton = document.querySelector('.ad-form__reset');
+
+const MIN_PRICES_FOR_HOUSING = [0, 1000, 3000, 5000, 10000];
+const NUMBER_OF_ROOMS = ['1', '2', '3', '100'];
+const NUMBER_OF_GUESTS = ['0', '1', '2', '3'];
+
 
 // Неактивное состояние формы
 const inactivateForm = () => {
@@ -42,21 +48,21 @@ const activateForm = () => {
 
 // Синхронизация типа жилья с минимальной ценой
 const changeMinPrice = () => {
-  if (typeOfHousingSelect.value === 'bungalow') {
-    priceInput.min = 0;
-    priceInput.placeholder ='0';
-  } else if (typeOfHousingSelect.value === 'flat') {
-    priceInput.min = 1000;
-    priceInput.placeholder ='1000';
-  } else if (typeOfHousingSelect.value === 'hotel') {
-    priceInput.min = 3000;
-    priceInput.placeholder ='3000';
-  } else if (typeOfHousingSelect.value === 'house') {
-    priceInput.min = 5000;
-    priceInput.placeholder ='5000';
-  } else if (typeOfHousingSelect.value === 'palace') {
-    priceInput.min = 10000;
-    priceInput.placeholder ='10000';
+  if (typeOfHousingSelect.value === typesOfHousingKeys[0]) {
+    priceInput.min = MIN_PRICES_FOR_HOUSING[0];
+    priceInput.placeholder =MIN_PRICES_FOR_HOUSING[0];
+  } else if (typeOfHousingSelect.value === typesOfHousingKeys[1]) {
+    priceInput.min = MIN_PRICES_FOR_HOUSING[1];
+    priceInput.placeholder =MIN_PRICES_FOR_HOUSING[1];
+  } else if (typeOfHousingSelect.value === typesOfHousingKeys[2]) {
+    priceInput.min = MIN_PRICES_FOR_HOUSING[2];
+    priceInput.placeholder =MIN_PRICES_FOR_HOUSING[2];
+  } else if (typeOfHousingSelect.value === typesOfHousingKeys[3]) {
+    priceInput.min = MIN_PRICES_FOR_HOUSING[3];
+    priceInput.placeholder =MIN_PRICES_FOR_HOUSING[3];
+  } else if (typeOfHousingSelect.value === typesOfHousingKeys[4]) {
+    priceInput.min = MIN_PRICES_FOR_HOUSING[4];
+    priceInput.placeholder =MIN_PRICES_FOR_HOUSING[4];
   }
 };
 
@@ -85,9 +91,8 @@ const checkValidityTitle = () => {
     titleInput.setCustomValidity(`Ещё ${  MIN_TITLE_LENGTH - valueLength } симв.`);
   } else if (valueLength > MAX_TITLE_LENGTH) {
     titleInput.setCustomValidity(`Удалите лишние ${  valueLength - MAX_TITLE_LENGTH } симв.`);
-  } else {
-    titleInput.setCustomValidity('');
   }
+  titleInput.setCustomValidity('');
 
   titleInput.reportValidity();
 };
@@ -100,9 +105,8 @@ const checkValidityPrice = () => {
     priceInput.setCustomValidity(`Минимальная цена ${ priceInput.min } руб.`);
   } else if (valuePrice > +priceInput.max) {
     priceInput.setCustomValidity(`Максимальная цена ${ priceInput.max } руб.`);
-  } else {
-    priceInput.setCustomValidity('');
   }
+  priceInput.setCustomValidity('');
 
   priceInput.reportValidity();
 };
@@ -113,32 +117,32 @@ const checkValidityRoomNumberCapacity = () => {
   capacitySelectOptions.forEach((element) => {
     element.disabled = true;
   });
-  if (numberOfRooms === '1') {
+  if (numberOfRooms === NUMBER_OF_ROOMS[0]) {
     capacitySelectOptions.forEach((element) => {
-      if (element.value === '1') {
+      if (element.value === NUMBER_OF_GUESTS[1]) {
         element.disabled = false;
-        capacitySelect.value = '1';
+        capacitySelect.value = NUMBER_OF_GUESTS[1];
       }
     });
-  } else if (numberOfRooms === '2') {
+  } else if (numberOfRooms === NUMBER_OF_ROOMS[1]) {
     capacitySelectOptions.forEach((element) => {
-      if (element.value === '1' || element.value === '2') {
+      if (element.value === NUMBER_OF_GUESTS[1] || element.value === NUMBER_OF_GUESTS[2]) {
         element.disabled = false;
-        capacitySelect.value = '1';
+        capacitySelect.value = NUMBER_OF_GUESTS[1];
       }
     });
-  } else if (numberOfRooms === '3') {
+  } else if (numberOfRooms === NUMBER_OF_ROOMS[2]) {
     capacitySelectOptions.forEach((element) => {
-      if (element.value === '1' || element.value === '2' || element.value === '3') {
+      if (element.value === NUMBER_OF_GUESTS[1] || element.value === NUMBER_OF_GUESTS[2] || element.value === NUMBER_OF_GUESTS[3]) {
         element.disabled = false;
-        capacitySelect.value = '1';
+        capacitySelect.value = NUMBER_OF_GUESTS[1];
       }
     });
-  } else if (numberOfRooms === '100') {
+  } else if (numberOfRooms === NUMBER_OF_ROOMS[3]) {
     capacitySelectOptions.forEach((element) => {
-      if (element.value === '0') {
+      if (element.value === NUMBER_OF_GUESTS[0]) {
         element.disabled = false;
-        capacitySelect.value = '0';
+        capacitySelect.value = NUMBER_OF_GUESTS[0];
       }
     });
   }

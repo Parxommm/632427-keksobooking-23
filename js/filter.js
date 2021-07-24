@@ -1,57 +1,66 @@
+/* eslint-disable arrow-body-style */
 const adsFilter = document.querySelector('.map__filters');
 
+const FILTER_PRICES = [10000, 50000];
+const PRICE_CATEGORY = ['low', 'middle', 'high'];
+const anyOptions = 'any';
 
-const filterByType = function (ads) {
-  return adsFilter['housing-type'].value === 'any' || adsFilter['housing-type'].value === ads.offer.type;
+
+const filterByType = (ads) => {
+  const valueFilterByType = adsFilter['housing-type'].value;
+  return valueFilterByType === anyOptions || valueFilterByType === ads.offer.type;
 };
 
-const filterByRooms = function (ads) {
-  return adsFilter['housing-rooms'].value === 'any' || +adsFilter['housing-rooms'].value === ads.offer.rooms;
+const filterByRooms = (ads) => {
+  const valueFilterByRooms = adsFilter['housing-rooms'].value;
+  return valueFilterByRooms === anyOptions || +valueFilterByRooms === ads.offer.rooms;
 };
-const filterByGuests = function (ads) {
-  return adsFilter['housing-guests'].value === 'any' || +adsFilter['housing-guests'].value === ads.offer.guests;
+const filterByGuests = (ads) => {
+  const valueFilterByGuests = adsFilter['housing-guests'].value;
+  return valueFilterByGuests === anyOptions || +valueFilterByGuests === ads.offer.guests;
 };
 
-const filterByPrice = function (ads) {
-  if (adsFilter['housing-price'].value === 'any') {
+const filterByPrice = (ads) => {
+  const valueFilterByPrice = adsFilter['housing-price'].value;
+  if (valueFilterByPrice === anyOptions) {
     return true;
-  } else {
-    switch (adsFilter['housing-price'].value) {
-      case 'low':
-        if (ads.offer.price <= 10000) {
-          return true;
-        }
-        break;
-      case 'middle':
-        if (ads.offer.price >= 10000 && ads.offer.price <= 50000) {
-          return true;
-        }
-        break;
-      case 'high':
-        if (ads.offer.price >= 50000) {
-          return true;
-        }
-        break;
-    }
+  }
+  switch (valueFilterByPrice) {
+    case PRICE_CATEGORY[0]:
+      if (ads.offer.price <= FILTER_PRICES[0]) {
+        return true;
+      }
+      break;
+    case PRICE_CATEGORY[1]:
+      if (ads.offer.price >= FILTER_PRICES[0] && ads.offer.price <= FILTER_PRICES[1]) {
+        return true;
+      }
+      break;
+    case PRICE_CATEGORY[2]:
+      if (ads.offer.price >= FILTER_PRICES[1]) {
+        return true;
+      }
+      break;
   }
 };
 
-const filterByFeatures = function (choosed, ads) {
+const filterByFeatures = (choosed, ads) => {
+  const housingFeatures = ads.offer.features;
   if (choosed.length === 0) {
     return true;
-  } else if (ads.offer.features) {
-    if (choosed.every((feature) => ads.offer.features.includes(feature))) {
+  } else if (housingFeatures) {
+    if (choosed.every((feature) => housingFeatures.includes(feature))) {
       return true;
     }
   }
 };
 
 
-const setChangeCallback = function (callback) {
+const setChangeCallback = (callback) => {
   adsFilter.addEventListener('change', callback);
 };
 
-const getFilteredAds = function (ads) {
+const getFilteredAds = (ads) => {
   const choosedFeatures = new FormData(adsFilter).getAll('features');
   const filteredAds =  ads.filter((ad) => filterByType(ad) && filterByRooms(ad) && filterByGuests(ad) && filterByPrice(ad) && filterByFeatures(choosedFeatures, ad));
   return filteredAds;

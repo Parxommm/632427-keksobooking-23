@@ -1,4 +1,4 @@
-import {showAlert, showSuccessCard, showErrorCard} from './utils.js';
+import {showAlert, openSuccessModal, openErrorModal} from './utils.js';
 import {addAllOffers, clearMarkers} from './map.js';
 import {adForm, activateForm, resetForm} from './form.js';
 import {setChangeCallback, getFilteredAds} from './filter.js';
@@ -12,9 +12,8 @@ const getData = () => {
       if (response.ok) {
         activateForm();
         return response.json();
-      } else {
-        showAlert('Данные не загружены', 'red', 0);
       }
+      showAlert('Данные не загружены', 'red', 0);
     }).then((ads) => {
       addAllOffers(ads);
       const addFilteredAds = () => {
@@ -44,12 +43,11 @@ const sendData = () => {
     ).then((response) => {
       if (response.ok) {
         resetForm();
-        showSuccessCard();
-      } else {
-        showErrorCard();
+        openSuccessModal();
       }
+      openErrorModal();
     }).catch(() => {
-      showErrorCard();
+      openErrorModal();
     });
   });
 };
